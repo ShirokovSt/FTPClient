@@ -1,0 +1,2 @@
+main-class: src.test.FTPProtocol.FTPClientTest
+class-path: bin/ lib/testng-7.6.1.jar lib/jcommander-1.82.jar lib/slf4j-api-1.7.36.jar 

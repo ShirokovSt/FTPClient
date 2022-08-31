@@ -1,0 +1,2 @@
+main-class: src.main.FTPProtocol.Server
+class-path: bin/
