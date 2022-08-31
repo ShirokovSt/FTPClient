@@ -31,7 +31,7 @@ public class Main {
                 String[] parts = commands.split(" ");
                 System.out.println();
                 switch (parts[0]) {
-                    case "getList" -> {
+                    case "getList":
                         if (mode)
                             socket = ftpCl.enActiveMode(args[2], port);
                         else
@@ -42,8 +42,8 @@ public class Main {
                         for (String name : namesList) {
                             System.out.println(name);
                         }
-                    }
-                    case "getSt" -> {
+                        break;
+                    case "getSt":
                         if (mode)
                             socket = ftpCl.enActiveMode(args[2], port);
                         else
@@ -54,8 +54,8 @@ public class Main {
                             ftpCl.downloadFromServer("json.txt", socket);
                             System.out.println(ftpCl.getInfo(parts[1], "json.txt"));
                         }
-                    }
-                    case "addSt" -> {
+                        break;
+                    case "addSt":
                         if (mode)
                             socket = ftpCl.enActiveMode(args[2], port);
                         else
@@ -72,8 +72,8 @@ public class Main {
                                 socket = ftpCl.enPassiveMode();
                             ftpCl.uploadToServer("json.txt", socket);
                         }
-                    }
-                    case "delSt" -> {
+                        break;
+                    case "delSt":
                         if (mode)
                             socket = ftpCl.enActiveMode(args[2], port);
                         else
@@ -90,12 +90,12 @@ public class Main {
                                 socket = ftpCl.enPassiveMode();
                             ftpCl.uploadToServer("json.txt", socket);
                         }
-                    }
-                    case "exit" -> {
+                        break;
+                    case "exit":
                         ftpCl.disconnect();
                         isExit = true;
-                    }
-                    default -> System.out.println("Command not found...");
+                        break;
+                    default: System.out.println("Command not found...");
                 }
                 System.out.println();
             }
