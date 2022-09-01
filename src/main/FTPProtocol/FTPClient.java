@@ -122,32 +122,35 @@ public class FTPClient {
         log(is);
         return clientSocket;
     }
-    public ArrayList<String> getStudentsList(String path) throws FileNotFoundException { // получение списка студентов по имени
+    public ArrayList<String> getStudentsList(String path, boolean useId) throws FileNotFoundException { // получение списка студентов по имени
         BufferedReader br = new BufferedReader(new FileReader(path));
         String str = br.lines().collect(Collectors.joining());
         int index = -1;
         int indexID = -1;
         ArrayList<String> namesList = new ArrayList<>();
         while(true) {
-            indexID = str.indexOf("\"id\":");
             index = str.indexOf("\"name\":");
             if(index == -1)
                 break;
             index += OFFSET_NAME;
-            indexID += OFFSET_ID;
             StringBuilder tmpStr = new StringBuilder();
-            StringBuilder tmpStrId = new StringBuilder();
             while (str.charAt(index) != '\"') {
                 char c = str.charAt(index);
                 tmpStr.append(c);
                 index++;
             }
-            while (str.charAt(indexID) != ',') {
-                char c = str.charAt(indexID);
-                tmpStrId.append(c);
-                indexID++;
-            }
-            namesList.add(tmpStr.toString() + " (id: " + tmpStrId.toString() +")");
+			if(useId) {
+				StringBuilder tmpStrId = new StringBuilder();
+				indexID = str.indexOf("\"id\":");
+				indexID += OFFSET_ID;
+				while (str.charAt(indexID) != ',') {
+					char c = str.charAt(indexID);
+					tmpStrId.append(c);
+					indexID++;
+				}
+				namesList.add(tmpStr.toString() + " (id: " + tmpStrId.toString() +")");
+			} else 
+				namesList.add(tmpStr.toString());
             str = str.substring(index);
         }
         Collections.sort(namesList);

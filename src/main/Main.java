@@ -3,14 +3,16 @@ package src.main;
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
+import java.net.Inet4Address;
 
 import src.main.FTPProtocol.FTPClient;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        if (args.length == 0) {
-            args = new String[]{"comp4621", "network", "192.168.10.218"};
-            FTPClient ftpCl = new FTPClient("comp4621", "network", "192.168.10.218");
+    public static void main(final String[] args) throws IOException, InterruptedException {
+        if (args.length == 3) {
+            if(args[2].equals("localhost"))
+				args[2] = Inet4Address.getLocalHost().getHostAddress();
+            FTPClient ftpCl = new FTPClient(args[0], args[1], args[2]);
             ftpCl.connect();
             ftpCl.authorization();
             System.out.print("Authorization is successful!\nSelect the mode: passive - 0, active - 1\nYour choice: ");
@@ -45,7 +47,7 @@ public class Main {
                             else
                                 socket = ftpCl.enPassiveMode();
                             ftpCl.downloadFromServer("json.txt", socket);
-                            ArrayList<String> namesList = ftpCl.getStudentsList("json.txt");
+                            ArrayList<String> namesList = ftpCl.getStudentsList("json.txt", true);
                             System.out.println("Result:");
                             for (String name : namesList) {
                                 System.out.println(name);

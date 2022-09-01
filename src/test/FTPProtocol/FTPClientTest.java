@@ -48,7 +48,7 @@ public class FTPClientTest {
     public void testListId() throws IOException {
         Socket socket = ftpCl.enPassiveMode();
         ftpCl.downloadFromServer("testJson.txt", socket);
-        ArrayList<String> realList = ftpCl.getStudentsList("testJson.txt");
+        ArrayList<String> realList = ftpCl.getStudentsList("testJson.txt", true);
         ArrayList<String> expectedList = new ArrayList<>(Arrays.asList("Alekseev (id: 2)", "Karinov (id: 6)", "Sharapov (id: 3)", "Vano (id: 1)"));
         Assert.assertEquals(realList, expectedList, "The lists don't match!!!");
     }
@@ -71,7 +71,7 @@ public class FTPClientTest {
         ftpCl.uploadToServer("testJson.txt", socket);
         socket = ftpCl.enPassiveMode();
         ftpCl.downloadFromServer("testJson.txt", socket);
-        ArrayList<String> list = ftpCl.getStudentsList("testJson.txt");
+        ArrayList<String> list = ftpCl.getStudentsList("testJson.txt", false);
 
         Set<String> set = new HashSet<String>(list);
         Assert.assertTrue(set.contains("Reshetov"), "Adding didn't work");
@@ -86,7 +86,7 @@ public class FTPClientTest {
         ftpCl.uploadToServer("testJson.txt", socket);
         socket = ftpCl.enPassiveMode();
         ftpCl.downloadFromServer("testJson.txt", socket);
-        ArrayList<String> list = ftpCl.getStudentsList("testJson.txt");
+        ArrayList<String> list = ftpCl.getStudentsList("testJson.txt", false);
 
         Set<String> set = new HashSet<String>(list);
         Assert.assertFalse(set.contains("Vano"), "Adding didn't work");
