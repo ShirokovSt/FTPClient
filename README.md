@@ -5,12 +5,12 @@
 1. Для сборки сервера и клиента:
 * Прописать команду для создания CLASS файлов: **javac -sourcepath src/main -d bin src/main/FTPProtocol/*.java src/main/Main.java**
 * Прописать команду для создания JAR файлов:
-- для сервера: **jar -cmf server_manifest/manifest.mf Server.jar -C bin .**
-- для клиента: **jar -cmf client_manifest/manifest.mf FTPClient.jar -C bin .**
+  - для сервера: **jar -cmf server_manifest/manifest.mf Server.jar -C bin .**
+  - для клиента: **jar -cmf client_manifest/manifest.mf FTPClient.jar -C bin .**
 2. Для сборки тестов:
 * Прописать команду для создания CLASS файлов: 
-- для Windows: ** javac -cp .;lib/* -d bin src/test/FTPProtocol/*.java **
-- для Linux: ** javac -cp .:lib/* -d bin src/test/FTPProtocol/*.java **
+  - для Windows: **javac -cp .;lib/* -d bin src/test/FTPProtocol/*.java**
+  - для Linux: **javac -cp .:lib/* -d bin src/test/FTPProtocol/*.java**
 * Прописать команду для создания JAR файлов: ** jar -cmf test_manifest/manifest.mf FTPTest.jar -C bin .**
 
 Сборку проводить не обязательно, необходимые JAR файлы уже есть в главном каталоге.
@@ -38,7 +38,7 @@
 Ниже приведены примеры работы команд:
 * пример работы getList
 ***
-![image](https://user-images.githubusercontent.com/62287381/187710741-ab43a107-bee2-479a-b211-74aa2a30e025.png)
+![image](https://user-images.githubusercontent.com/62287381/187873368-84e60b66-8fd1-4a00-ab04-dd82247641a7.png)
 ***
 * пример работы getSt <id>
 ***
@@ -50,7 +50,7 @@
 ***
 * getList после addSt Rahim
 ***
-![image](https://user-images.githubusercontent.com/62287381/187711211-487e12fd-be9e-4321-9e04-ad5f210e4980.png)
+![image](https://user-images.githubusercontent.com/62287381/187873641-5520e61e-253a-4263-b849-98c143528f90.png)
 ***
 * пример работы delSt <id>
 ***
@@ -58,7 +58,7 @@
 ***
 * getList после delSt 1
 ***
-![image](https://user-images.githubusercontent.com/62287381/187711696-126abe0e-4826-4f65-8e5e-4637d5890c14.png)
+![image](https://user-images.githubusercontent.com/62287381/187874195-d7a69011-e140-4216-8340-20d380e7e2f7.png)
 ***
 * пример работы exit
 ***
