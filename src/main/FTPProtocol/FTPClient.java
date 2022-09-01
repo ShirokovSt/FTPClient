@@ -17,7 +17,6 @@ public class FTPClient {
     private OutputStream os;
     private BufferedReader br;
     private ServerSocket serv;
-
     private static final int OFFSET_NAME = 9;
     private static final int OFFSET_ID = 6;
     private static final int OFFSET_ID_TO_BEG_OBJ = 11;
@@ -191,8 +190,12 @@ public class FTPClient {
         int index = -1;
 
         index = str.lastIndexOf("\"id\":");
-        if (index == -1)
+        if (index == -1) {
+            FileWriter fw = new FileWriter(path);
+            fw.write("{  \"students\": [     {      \"id\": 1,      \"name\": \"" + name + "\"    }  ]  }");
+            fw.close();
             return;
+        }
         index += 6;
         StringBuilder tmpStr = new StringBuilder();
         while (str.charAt(index) != ',') {
@@ -201,7 +204,7 @@ public class FTPClient {
             index++;
         }
         String newId = String.valueOf((Integer.parseInt(tmpStr.toString()) + 1));
-        String jsonObj = new String(",    {      \"id\": " + newId + ",      \"name\": \"" + name +"\"    }  ]  }");
+        String jsonObj = new String(",    {      \"id\": " + newId + ",      \"name\": \"" + name + "\"    }  ]  }");
         index = str.lastIndexOf("}");
         str = str.substring(0, index);
         index = str.lastIndexOf("}");
@@ -225,8 +228,16 @@ public class FTPClient {
         int p = str.charAt(endDel - 1);
         if(str.charAt(endDel - 1) == ' ') {
             endDel--;
-            while(str.charAt(startDel) != ',')
+            while(str.charAt(startDel) != ',') {
                 startDel--;
+                if(str.charAt(startDel) == '[') {
+                    str = "";
+                    FileWriter fw = new FileWriter(path);
+                    fw.write(str);
+                    fw.close();
+                    return true;
+                }
+            }
             startDel--;
         }
         str = str.substring(0, startDel + 1) + str.substring(endDel);
@@ -235,7 +246,7 @@ public class FTPClient {
         fw.close();
         return true;
     }
-	public Socket getSocket() {
+    public Socket getSocket() {
         return socket;
     }
 }
