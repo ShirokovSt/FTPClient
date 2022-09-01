@@ -9,8 +9,8 @@
   - для клиента: **jar -cmf client_manifest/manifest.mf FTPClient.jar -C bin .**
 2. Для сборки тестов:
 * Прописать команду для создания CLASS файлов: 
-  - для Windows: **[javac -cp .;lib/* -d bin src/test/FTPProtocol/*.java]**
-  - для Linux: **[javac -cp .:lib/* -d bin src/test/FTPProtocol/*.java]**
+  - для Windows: strong>javac -cp .;lib/* -d bin src/test/FTPProtocol/*.java
+  - для Linux: strong>javac -cp .:lib/* -d bin src/test/FTPProtocol/*.java
 * Прописать команду для создания JAR файлов: **jar -cmf test_manifest/manifest.mf FTPTest.jar -C bin .**
 
 Сборку проводить не обязательно, необходимые JAR файлы уже есть в главном каталоге.
