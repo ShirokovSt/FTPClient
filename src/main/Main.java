@@ -84,6 +84,8 @@ public class Main {
                             ftpCl.downloadFromServer("json.txt", socket);
                             if (ftpCl.eraseStudent(parts[1], "json.txt"))
                                 System.out.println("Successful");
+                            else
+                                System.out.println("Not found...");
                             if (mode)
                                 socket = ftpCl.enActiveMode(args[2], port);
                             else

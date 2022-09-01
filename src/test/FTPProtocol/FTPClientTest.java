@@ -49,7 +49,7 @@ public class FTPClientTest {
         Socket socket = ftpCl.enPassiveMode();
         ftpCl.downloadFromServer("testJson.txt", socket);
         ArrayList<String> realList = ftpCl.getStudentsList("testJson.txt");
-        ArrayList<String> expectedList = new ArrayList<>(Arrays.asList("Alekseev", "Karinov", "Sharapov", "Vano"));
+        ArrayList<String> expectedList = new ArrayList<>(Arrays.asList("Alekseev (id: 2)", "Karinov (id: 6)", "Sharapov (id: 3)", "Vano (id: 1)"));
         Assert.assertEquals(realList, expectedList, "The lists don't match!!!");
     }
 

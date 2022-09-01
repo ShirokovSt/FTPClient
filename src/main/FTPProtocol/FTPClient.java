@@ -17,6 +17,11 @@ public class FTPClient {
     private OutputStream os;
     private BufferedReader br;
     private ServerSocket serv;
+
+    private static final int OFFSET_NAME = 9;
+    private static final int OFFSET_ID = 6;
+    private static final int OFFSET_ID_TO_BEG_OBJ = 11;
+    private static final int OFFSET_TO_END_OBJ = 29;
     public FTPClient(String login, String password, String ip) throws IOException {
         this.login = login;
         this.password = password;
@@ -122,19 +127,28 @@ public class FTPClient {
         BufferedReader br = new BufferedReader(new FileReader(path));
         String str = br.lines().collect(Collectors.joining());
         int index = -1;
+        int indexID = -1;
         ArrayList<String> namesList = new ArrayList<>();
         while(true) {
+            indexID = str.indexOf("\"id\":");
             index = str.indexOf("\"name\":");
             if(index == -1)
                 break;
-            index += 9;
+            index += OFFSET_NAME;
+            indexID += OFFSET_ID;
             StringBuilder tmpStr = new StringBuilder();
+            StringBuilder tmpStrId = new StringBuilder();
             while (str.charAt(index) != '\"') {
                 char c = str.charAt(index);
                 tmpStr.append(c);
                 index++;
             }
-            namesList.add(tmpStr.toString());
+            while (str.charAt(indexID) != ',') {
+                char c = str.charAt(indexID);
+                tmpStrId.append(c);
+                indexID++;
+            }
+            namesList.add(tmpStr.toString() + " (id: " + tmpStrId.toString() +")");
             str = str.substring(index);
         }
         Collections.sort(namesList);
@@ -148,7 +162,7 @@ public class FTPClient {
             index = str.indexOf("\"id\":");
             if(index == -1)
                 break;
-            index += 6;
+            index += OFFSET_ID;
             StringBuilder tmpStr = new StringBuilder();
             while (str.charAt(index) != ',') {
                 char c = str.charAt(index);
@@ -158,7 +172,7 @@ public class FTPClient {
             if (tmpStr.toString().equals(id)) {
                 str = str.substring(index);
                 index = str.indexOf("\"name\":");
-                index += 9;
+                index += OFFSET_NAME;
                 StringBuilder name = new StringBuilder();
                 while (str.charAt(index) != '\"') {
                     char c = str.charAt(index);
@@ -206,8 +220,8 @@ public class FTPClient {
         BufferedReader br = new BufferedReader(new FileReader(path));
         String str = br.lines().collect(Collectors.joining());
         int curEr = str.indexOf("\"id\": " + id);
-        int startDel = curEr - 11;
-        int endDel = curEr + 29 + name.length() + id.length();
+        int startDel = curEr - OFFSET_ID_TO_BEG_OBJ;
+        int endDel = curEr + OFFSET_TO_END_OBJ + name.length() + id.length();
         int p = str.charAt(endDel - 1);
         if(str.charAt(endDel - 1) == ' ') {
             endDel--;
